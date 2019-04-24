@@ -4,6 +4,7 @@ import PaymentSubmitter from '../payment/payment-submitter';
 import ClientTokenGenerator from '../payment/client-token-generator';
 import StoreRequestSender from '../store/store-request-sender';
 import DEFAULT_CONFIG from './default-config';
+import ThreeDSAuthenticator from '../payment/threeds-authenticator';
 
 export default class Client {
     /**
@@ -16,13 +17,15 @@ export default class Client {
         const paymentSubmitter = PaymentSubmitter.create(clientConfig);
         const clientTokenGenerator = ClientTokenGenerator.create(clientConfig);
         const storeRequestSender = StoreRequestSender.create(clientConfig);
+        const threeDSAuthenticator = ThreeDSAuthenticator.create(clientConfig);
 
         return new Client(
             clientConfig,
             paymentSubmitter,
             offsitePaymentInitializer,
             clientTokenGenerator,
-            storeRequestSender
+            storeRequestSender,
+            threeDSAuthenticator
         );
     }
 
@@ -32,13 +35,15 @@ export default class Client {
      * @param {OffsitePaymentInitializer} offsitePaymentInitializer
      * @param {ClientTokenGenerator} clientTokenGenerator
      * @param {StoreRequestSender} storeRequestSender
+     * @param {ThreeDSAuthenticator} threeDSAuthenticator
      */
     constructor(
         config,
         paymentSubmitter,
         offsitePaymentInitializer,
         clientTokenGenerator,
-        storeRequestSender
+        storeRequestSender,
+        threeDSAuthenticator
     ) {
         /**
          * @private
@@ -69,6 +74,12 @@ export default class Client {
          * @type {StoreRequestSender}
          */
         this.storeRequestSender = storeRequestSender;
+
+        /**
+         * @private
+         * @type {ThreeDSAuthenticator}
+         */
+        this.threeDSAuthenticator = threeDSAuthenticator;
     }
 
     /**
@@ -154,5 +165,14 @@ export default class Client {
      */
     deleteShopperInstrument(data, callback) {
         this.storeRequestSender.deleteShopperInstrument(data, callback);
+    }
+
+    /**
+     * @param {PaymentRequestData} data
+     * @param {Function} [callback]
+     * @returns {void}
+     */
+    authenticateThreeDS(data, callback) {
+        this.threeDSAuthenticator.authenticateThreeDS(data, callback);
     }
 }

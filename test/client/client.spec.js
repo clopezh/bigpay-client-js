@@ -11,6 +11,7 @@ describe('Client', () => {
     let offsitePaymentInitializer;
     let paymentSubmitter;
     let storeRequestSender;
+    let threeDSAuthenticator;
 
     beforeEach(() => {
         config = { host: 'https://bigpay.dev' };
@@ -27,6 +28,10 @@ describe('Client', () => {
             generateClientToken: jasmine.createSpy('generateClientToken'),
         };
 
+        threeDSAuthenticator = {
+            threeDSAuthenticator: jasmine.createSpy('threeDSAuthenticator'),
+        };
+
         storeRequestSender = {
             getShopperToken: jasmine.createSpy('getShopperToken'),
             loadInstruments: jasmine.createSpy('loadInstruments'),
@@ -40,7 +45,8 @@ describe('Client', () => {
             paymentSubmitter,
             offsitePaymentInitializer,
             clientTokenGenerator,
-            storeRequestSender
+            storeRequestSender,
+            threeDSAuthenticator
         );
     });
 
@@ -125,5 +131,19 @@ describe('Client', () => {
         client.deleteShopperInstrument(data, callback);
 
         expect(storeRequestSender.deleteShopperInstrument).toHaveBeenCalledWith(data, callback);
+    });
+
+    // TODO: Update this test case
+    it('authenticate three d secure flow', () => {
+        const callback = () => {};
+        const data = merge({}, paymentRequestDataMock, {
+            paymentMethod: {
+                type: HOSTED,
+            },
+        });
+
+        client.authenticateThreeDS(data, callback);
+
+        expect(threeDSAuthenticator.authenticateThreeDS).toHaveBeenCalledWith(data, callback);
     });
 });

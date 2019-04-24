@@ -49,4 +49,8 @@ export default class UrlHelper {
     getGenerateClientTokenUrl() {
         return `${this.host}/api/v2/public/payments/client_tokens`;
     }
+
+    getThreeDSAuthenticateUrl() {
+        return `${this.host}/pay/3ds/authenticate`;
+    }
 }
