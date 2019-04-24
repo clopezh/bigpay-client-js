@@ -1,10 +1,10 @@
 import objectAssign from 'object-assign';
 import { omitNil, toString } from '../../common/utils';
-import AddressMapper from './address-mapper';
-import CustomerMapper from './customer-mapper';
-import MetaMapper from './meta-mapper';
 import PaymentMethodIdMapper from '../payment-method-mappers/payment-method-id-mapper';
-import StoreMapper from './store-mapper';
+import AddressMapper from '../offsite-payment-mappers/address-mapper';
+import CustomerMapper from '../offsite-payment-mappers/customer-mapper';
+import MetaMapper from '../offsite-payment-mappers/meta-mapper';
+import StoreMapper from '../offsite-payment-mappers/store-mapper';
 
 export default class PayloadMapper {
     /**
