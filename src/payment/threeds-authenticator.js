@@ -1,5 +1,5 @@
 import { createFormPoster } from '@bigcommerce/form-poster';
-import { HOSTED } from './payment-types';
+import { API } from './payment-types';
 import PayloadMapper from './threeds-authenticate-mappers/payload-mapper';
 import UrlHelper from './url-helper';
 
@@ -51,7 +51,7 @@ export default class ThreeDSAuthenticator {
     authenticateThreeDS(data, callback) {
         const { paymentMethod = {} } = data;
 
-        if (paymentMethod.type !== HOSTED) {
+        if (paymentMethod.type !== API) {
             throw new Error(`${paymentMethod.type} is not supported.`);
         }
 
