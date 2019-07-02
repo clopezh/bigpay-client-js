@@ -13,7 +13,7 @@ describe('PaymentIntentGenerator', () => {
 
         urlHelper = {
             getGeneratePaymentIntentUrl:
-                jasmine.createSpy('getPaymentUrl').and.returnValue('}/api/v2/public/payments/payment_intents'),
+                jasmine.createSpy('getPaymentUrl').and.returnValue('/api/v2/public/payments/payment_intents'),
         };
 
         requestSender = {
