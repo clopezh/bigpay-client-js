@@ -1,4 +1,4 @@
-import { omitNil } from '../../../common/utils';
+import { omitNil, toString } from '../../../common/utils';
 
 export default class QuoteMapper {
     /**
@@ -16,6 +16,7 @@ export default class QuoteMapper {
         return omitNil({
             billing_address: this.mapToAddress(data, 'billingAddress'),
             shipping_address: this.mapToAddress(data, 'shippingAddress'),
+            customer: this.mapToCustomer(data),
         });
     }
 
@@ -41,6 +42,20 @@ export default class QuoteMapper {
             phone: address.phone,
             postal_code: address.postCode,
             state: address.province,
+        });
+    }
+
+    /**
+     * @param {PaymentRequestData} data
+     * @returns {Object}
+     */
+    mapToCustomer(data) {
+        const { customer = {} } = data;
+
+        return omitNil({
+            id: customer.customerId ? toString(customer.customerId) : null,
+            name: customer.name ? toString(customer.name) : null,
+            email: customer.email ? toString(customer.email) : null,
         });
     }
 }
